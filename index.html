@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore a galaxy of free online tools for PDF, image editing, text manipulation, and calculations at Galactic Tools Hub.">
-    <meta name="keywords" content="online tools, PDF to word, Word to pdf, Compress image, Compress file, Free Tools">
     <title>Galactic Tools Hub</title>
     <style>
         @keyframes twinkle {
@@ -14,14 +12,15 @@
         }
 
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0px) rotate(360deg); }
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
         body {
@@ -50,14 +49,6 @@
             background: #fff;
             border-radius: 50%;
             animation: twinkle 1s infinite;
-        }
-
-        .planet {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            animation: float 10s infinite ease-in-out;
         }
 
         .hero {
@@ -158,6 +149,11 @@
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         .progress-bar {
             width: 100%;
             height: 10px;
@@ -186,6 +182,7 @@
             margin: 0 10px;
             font-size: 2em;
             color: #fff;
+            text-decoration: none;
             transition: all 0.3s ease;
         }
 
@@ -202,6 +199,30 @@
             .tools-grid {
                 grid-template-columns: 1fr;
             }
+        }
+
+        .planet {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        .loading-animation {
+            display: none;
+            font-size: 3em;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .download-icon {
+            font-size: 2em;
+            animation: bounce 0.5s infinite;
         }
     </style>
 </head>
@@ -222,8 +243,9 @@
                 <p>Seret & lepas file PDF Anda di sini atau klik untuk mengunggah</p>
             </div>
             <input type="file" accept=".pdf" style="display: none;">
-            <button class="btn convert-btn">Konversi</button>
+            <button class="btn convert-btn" disabled>Konversi</button>
             <div class="progress-bar"><div class="progress"></div></div>
+            <div class="loading-animation">🌎</div>
         </div>
 
         <div class="tool-card" id="word-to-pdf">
@@ -234,8 +256,9 @@
                 <p>Seret & lepas file Word Anda di sini atau klik untuk mengunggah</p>
             </div>
             <input type="file" accept=".doc,.docx" style="display: none;">
-            <button class="btn convert-btn">Konversi</button>
+            <button class="btn convert-btn" disabled>Konversi</button>
             <div class="progress-bar"><div class="progress"></div></div>
+            <div class="loading-animation">🌍</div>
         </div>
 
         <div class="tool-card" id="image-compression">
@@ -246,8 +269,9 @@
                 <p>Seret & lepas file gambar Anda di sini atau klik untuk mengunggah</p>
             </div>
             <input type="file" accept="image/*" style="display: none;">
-            <button class="btn compress-btn">Kompres</button>
+            <button class="btn compress-btn" disabled>Kompres</button>
             <div class="progress-bar"><div class="progress"></div></div>
+            <div class="loading-animation">🌏</div>
         </div>
 
         <div class="tool-card" id="file-compression">
@@ -258,8 +282,9 @@
                 <p>Seret & lepas file Anda di sini atau klik untuk mengunggah</p>
             </div>
             <input type="file" accept=".pdf,.doc,.docx,.ppt,.pptx" style="display: none;">
-            <button class="btn compress-btn">Kompres</button>
+            <button class="btn compress-btn" disabled>Kompres</button>
             <div class="progress-bar"><div class="progress"></div></div>
+            <div class="loading-animation">🌌</div>
         </div>
     </div>
 
@@ -267,6 +292,7 @@
         <div class="social-links">
             <a href="#" title="Instagram">🛰️</a>
             <a href="#" title="Twitter">🚀</a>
+            <a href="#" title="Facebook">🌠</a>
         </div>
         <p>© 2024 Galactic Tools Hub. Semua hak dilindungi di seluruh galaksi. 👽</p>
     </footer>
@@ -286,7 +312,7 @@
 
             // Create floating planets
             const body = document.body;
-            for (let i = 0; i < 3; i++) {
+            for (let i = 0; i < 5; i++) {
                 const planet = document.createElement('div');
                 planet.classList.add('planet');
                 planet.style.left = `${Math.random() * 100}%`;
@@ -304,6 +330,7 @@
                 const actionBtn = card.querySelector('.btn');
                 const progressBar = card.querySelector('.progress-bar');
                 const progress = card.querySelector('.progress');
+                const loadingAnimation = card.querySelector('.loading-animation');
 
                 uploadArea.addEventListener('click', () => fileInput.click());
 
@@ -321,11 +348,13 @@
                     uploadArea.classList.remove('dragover');
                     fileInput.files = e.dataTransfer.files;
                     updateUploadAreaText(uploadArea, fileInput.files[0]);
+                    actionBtn.disabled = false;
                 });
 
                 fileInput.addEventListener('change', () => {
                     if (fileInput.files.length > 0) {
                         updateUploadAreaText(uploadArea, fileInput.files[0]);
+                        actionBtn.disabled = false;
                     }
                 });
 
@@ -334,7 +363,7 @@
                         alert('Silakan pilih file terlebih dahulu.');
                         return;
                     }
-                    processFile(fileInput.files[0], card.id, progressBar, progress);
+                    processFile(fileInput.files[0], card.id, progressBar, progress, loadingAnimation);
                 });
             });
 
@@ -353,8 +382,9 @@
                 return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
             }
 
-            function processFile(file, toolId, progressBar, progress) {
+            function processFile(file, toolId, progressBar, progress, loadingAnimation) {
                 progressBar.style.display = 'block';
+                loadingAnimation.style.display = 'block';
                 progress.style.width = '0%';
 
                 let width = 0;
@@ -362,16 +392,9 @@
                     if (width >= 100) {
                         clearInterval(interval);
                         setTimeout(() => {
-                            alert('Proses selesai! (Ini adalah simulasi)');
                             progressBar.style.display = 'none';
-                            // Add download animation here
-                            const toolCard = document.getElementById(toolId);
-                            const downloadIcon = document.createElement('div');
-                            downloadIcon.innerHTML = '⬇️';
-                            downloadIcon.style.fontSize = '2em';
-                            downloadIcon.style.animation = 'bounce 0.5s infinite';
-                            toolCard.appendChild(downloadIcon);
-                            setTimeout(() => toolCard.removeChild(downloadIcon), 3000);
+                            loadingAnimation.style.display = 'none';
+                            simulateDownload(toolId, file.name);
                         }, 500);
                     } else {
                         width += Math.random() * 10;
@@ -380,10 +403,35 @@
                     }
                 }, 200);
 
-                // Here you would typically implement the actual file processing logic
-                // For now, we're just simulating the process
+                // Here you would typically integrate with a third-party API for actual file processing
+                // For example, using PDF.co API for PDF/Word conversion or TinyPNG API for image compression
+                // This is a simplified simulation for demonstration purposes
+            }
+
+            function simulateDownload(toolId, fileName) {
+                const toolCard = document.getElementById(toolId);
+                const downloadIcon = document.createElement('div');
+                downloadIcon.classList.add('download-icon');
+                downloadIcon.innerHTML = '⬇️';
+                toolCard.appendChild(downloadIcon);
+
+                setTimeout(() => {
+                    toolCard.removeChild(downloadIcon);
+                    // Create a dummy blob for download
+                    const blob = new Blob(['Processed content for ' + fileName], { type: 'text/plain' });
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'processed_' + fileName;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                    alert('File berhasil diproses dan diunduh!');
+                }, 3000);
             }
         });
     </script>
 </body>
-</html>
+    </html>
