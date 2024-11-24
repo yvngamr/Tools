@@ -1,454 +1,388 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galactic Tools Hub - Your Universe of Free Online Tools</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Explore a galaxy of free online tools for PDF, image editing, text manipulation, and calculations at Galactic Tools Hub.">
+    <meta name="keywords" content="online tools, PDF to word, Word to pdf, Compress image, Compress file, Free Tools">
+    <title>Galactic Tools Hub</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        @keyframes twinkle {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #000033, #000066);
             color: #fff;
-            background-color: #000;
             overflow-x: hidden;
         }
 
-        .stars, .twinkling {
+        .stars {
             position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            display: block;
-        }
-
-        .stars {
-            background: #000 url('https://i.imgur.com/YKY28eT.png') repeat top center;
-            z-index: -2;
-        }
-
-        .twinkling {
-            background: transparent url('https://i.imgur.com/XYMF4ca.png') repeat top center;
+            pointer-events: none;
             z-index: -1;
-            animation: move-twink-back 200s linear infinite;
         }
 
-        @keyframes move-twink-back {
-            from {background-position: 0 0;}
-            to {background-position: -10000px 5000px;}
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 1s infinite;
         }
 
-        header {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 1rem;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(5px);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #00ffff;
-            text-decoration: none;
-        }
-
-        .search-bar {
-            flex-grow: 1;
-            margin: 0 2rem;
-        }
-
-        .search-bar input {
-            width: 100%;
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-        }
-
-        main {
-            padding-top: 80px;
+        .planet {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            animation: float 10s infinite ease-in-out;
         }
 
         .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             text-align: center;
-            padding: 2rem;
+            padding: 100px 20px;
+            position: relative;
+            overflow: hidden;
         }
 
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
+        .hero h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
             color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.2em;
             max-width: 600px;
-            margin-bottom: 2rem;
+            margin: 0 auto;
+            color: #ff00ff;
         }
 
         .tools-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            gap: 20px;
+            padding: 20px;
         }
 
         .tool-card {
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 2rem;
+            border-radius: 10px;
+            padding: 20px;
             text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .tool-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .tool-card:hover::before {
+            opacity: 1;
         }
 
         .tool-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #00ffff;
-        }
-
-        .btn-use {
-            background: linear-gradient(45deg, #ff00ff, #00ffff);
-            color: #fff;
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 50px;
-            font-family: 'Orbitron', sans-serif;
-            text-decoration: none;
-            transition: transform 0.3s ease;
-            display: inline-block;
-            cursor: pointer;
-        }
-
-        .btn-use:hover {
-            transform: scale(1.05);
-            animation: glow 2s infinite;
-        }
-
-        @keyframes glow {
-            0% { box-shadow: 0 0 5px #00ffff; }
-            50% { box-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff; }
-            100% { box-shadow: 0 0 5px #00ffff; }
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1001;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.8);
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background-color: #0a192f;
-            margin: 10% auto;
-            padding: 20px;
-            border: 1px solid #00ffff;
-            width: 80%;
-            max-width: 600px;
-            border-radius: 20px;
-            box-shadow: 0 0 20px #00ffff;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: #00ffff;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        #tool-interface {
-            margin-top: 20px;
-        }
-
-        #tool-interface input[type="file"],
-        #tool-interface input[type="text"],
-        #tool-interface textarea {
-            width: 100%;
-            padding: 10px;
+            font-size: 3em;
             margin-bottom: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid #00ffff;
-            color: #fff;
-            border-radius: 5px;
-        }
-
-        #tool-interface button {
-            background: linear-gradient(45deg, #ff00ff, #00ffff);
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-family: 'Orbitron', sans-serif;
             transition: transform 0.3s ease;
         }
 
-        #tool-interface button:hover {
+        .tool-card:hover .tool-icon {
+            transform: scale(1.1);
+        }
+
+        .upload-area {
+            border: 2px dashed #00ffff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area.dragover {
+            background: rgba(0, 255, 255, 0.2);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
             transform: scale(1.05);
-            animation: glow 2s infinite;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #00ffff, #ff00ff);
+            transition: width 0.3s ease;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 2em;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: scale(1.2);
+            color: #00ffff;
         }
 
         @media (max-width: 768px) {
-            nav {
-                flex-direction: column;
-            }
-
-            .search-bar {
-                margin: 1rem 0;
-                width: 100%;
-            }
-
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2.5em;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
     <div class="stars"></div>
-    <div class="twinkling"></div>
 
-    <header>
-        <nav>
-            <a href="#" class="logo">Galactic Tools Hub</a>
-            <div class="search-bar">
-                <input type="text" id="search-input" placeholder="Search for a tool...">
+    <section class="hero">
+        <h1>Galactic Tools Hub</h1>
+        <p>Jelajahi kemudahan konversi dan kompresi file di alam semesta digital kami!</p>
+    </section>
+
+    <div class="tools-grid">
+        <div class="tool-card" id="pdf-to-word">
+            <div class="tool-icon">📄➡️📝</div>
+            <h3>PDF ke Word</h3>
+            <p>Ubah dokumen PDF Anda menjadi file Word yang dapat diedit.</p>
+            <div class="upload-area">
+                <p>Seret & lepas file PDF Anda di sini atau klik untuk mengunggah</p>
             </div>
-        </nav>
-    </header>
+            <input type="file" accept=".pdf" style="display: none;">
+            <button class="btn convert-btn">Konversi</button>
+            <div class="progress-bar"><div class="progress"></div></div>
+        </div>
 
-    <main>
-        <section class="hero">
-            <h1>Welcome to Galactic Tools Hub</h1>
-            <p>Your Universe of Free Online Tools</p>
-        </section>
+        <div class="tool-card" id="word-to-pdf">
+            <div class="tool-icon">📝➡️📄</div>
+            <h3>Word ke PDF</h3>
+            <p>Ubah dokumen Word Anda menjadi format PDF yang universal.</p>
+            <div class="upload-area">
+                <p>Seret & lepas file Word Anda di sini atau klik untuk mengunggah</p>
+            </div>
+            <input type="file" accept=".doc,.docx" style="display: none;">
+            <button class="btn convert-btn">Konversi</button>
+            <div class="progress-bar"><div class="progress"></div></div>
+        </div>
 
-        <section class="tools-grid" id="tools-grid">
-            <!-- Tool cards will be dynamically added here -->
-        </section>
-    </main>
+        <div class="tool-card" id="image-compression">
+            <div class="tool-icon">🖼️➡️📦</div>
+            <h3>Kompres Gambar</h3>
+            <p>Kompres gambar Anda tanpa mengurangi kualitas secara signifikan.</p>
+            <div class="upload-area">
+                <p>Seret & lepas file gambar Anda di sini atau klik untuk mengunggah</p>
+            </div>
+            <input type="file" accept="image/*" style="display: none;">
+            <button class="btn compress-btn">Kompres</button>
+            <div class="progress-bar"><div class="progress"></div></div>
+        </div>
 
-    <div id="tool-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 id="modal-title"></h2>
-            <div id="tool-interface"></div>
+        <div class="tool-card" id="file-compression">
+            <div class="tool-icon">📁➡️🗜️</div>
+            <h3>Kompres File</h3>
+            <p>Kompres file PDF, Word, atau PowerPoint Anda untuk menghemat ruang.</p>
+            <div class="upload-area">
+                <p>Seret & lepas file Anda di sini atau klik untuk mengunggah</p>
+            </div>
+            <input type="file" accept=".pdf,.doc,.docx,.ppt,.pptx" style="display: none;">
+            <button class="btn compress-btn">Kompres</button>
+            <div class="progress-bar"><div class="progress"></div></div>
         </div>
     </div>
 
+    <footer>
+        <div class="social-links">
+            <a href="#" title="Instagram">🛰️</a>
+            <a href="#" title="Twitter">🚀</a>
+        </div>
+        <p>© 2024 Galactic Tools Hub. Semua hak dilindungi di seluruh galaksi. 👽</p>
+    </footer>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const toolsData = [
-                { name: "PDF Converter", icon: "📄", category: "PDF", action: "convertPDF" },
-                { name: "PDF Merger", icon: "🔗", category: "PDF", action: "mergePDF" },
-                { name: "PDF Splitter", icon: "✂️", category: "PDF", action: "splitPDF" },
-                { name: "Image Compressor", icon: "🗜️", category: "Image", action: "compressImage" },
-                { name: "Image Resizer", icon: "🔍", category: "Image", action: "resizeImage" },
-                { name: "Image Cropper", icon: "🖼️", category: "Image", action: "cropImage" },
-                { name: "Word Counter", icon: "🔢", category: "Text", action: "countWords" },
-                { name: "Case Converter", icon: "🔡", category: "Text", action: "convertCase" },
-                { name: "Currency Converter", icon: "💱", category: "Calculator", action: "convertCurrency" },
-                { name: "Basic Calculator", icon: "🧮", category: "Calculator", action: "calculate" }
-            ];
+            // Create stars
+            const starsContainer = document.querySelector('.stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 2}s`;
+                starsContainer.appendChild(star);
+            }
 
-            const toolsGrid = document.getElementById('tools-grid');
-            const searchInput = document.getElementById('search-input');
-            const modal = document.getElementById('tool-modal');
-            const modalTitle = document.getElementById('modal-title');
-            const toolInterface = document.getElementById('tool-interface');
-            const closeBtn = document.getElementsByClassName('close')[0];
+            // Create floating planets
+            const body = document.body;
+            for (let i = 0; i < 3; i++) {
+                const planet = document.createElement('div');
+                planet.classList.add('planet');
+                planet.style.left = `${Math.random() * 100}%`;
+                planet.style.top = `${Math.random() * 100}%`;
+                planet.style.background = `radial-gradient(circle at 30% 30%, #${Math.floor(Math.random()*16777215).toString(16)}, #000)`;
+                planet.style.animationDelay = `${Math.random() * 5}s`;
+                body.appendChild(planet);
+            }
 
-            function createToolCard(tool) {
-                const card = document.createElement('div');
-                card.className = 'tool-card';
-                card.innerHTML = `
-                    <div class="tool-icon">${tool.icon}</div>
-                    <h3>${tool.name}</h3>
-                    <button class="btn-use" data-action="${tool.action}">Use Tool</button>
+            const toolCards = document.querySelectorAll('.tool-card');
+
+            toolCards.forEach(card => {
+                const uploadArea = card.querySelector('.upload-area');
+                const fileInput = card.querySelector('input[type="file"]');
+                const actionBtn = card.querySelector('.btn');
+                const progressBar = card.querySelector('.progress-bar');
+                const progress = card.querySelector('.progress');
+
+                uploadArea.addEventListener('click', () => fileInput.click());
+
+                uploadArea.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.add('dragover');
+                });
+
+                uploadArea.addEventListener('dragleave', () => {
+                    uploadArea.classList.remove('dragover');
+                });
+
+                uploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.remove('dragover');
+                    fileInput.files = e.dataTransfer.files;
+                    updateUploadAreaText(uploadArea, fileInput.files[0]);
+                });
+
+                fileInput.addEventListener('change', () => {
+                    if (fileInput.files.length > 0) {
+                        updateUploadAreaText(uploadArea, fileInput.files[0]);
+                    }
+                });
+
+                actionBtn.addEventListener('click', () => {
+                    if (fileInput.files.length === 0) {
+                        alert('Silakan pilih file terlebih dahulu.');
+                        return;
+                    }
+                    processFile(fileInput.files[0], card.id, progressBar, progress);
+                });
+            });
+
+            function updateUploadAreaText(uploadArea, file) {
+                uploadArea.innerHTML = `
+                    <p>File terpilih: ${file.name}</p>
+                    <p>Ukuran: ${formatFileSize(file.size)}</p>
                 `;
-                return card;
             }
 
-            function renderTools(tools) {
-                toolsGrid.innerHTML = '';
-                tools.forEach(tool => {
-                    const card = createToolCard(tool);
-                    toolsGrid.appendChild(card);
-                });
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
             }
 
-            renderTools(toolsData);
+            function processFile(file, toolId, progressBar, progress) {
+                progressBar.style.display = 'block';
+                progress.style.width = '0%';
 
-            searchInput.addEventListener('input', (e) => {
-                const searchTerm = e.target.value.toLowerCase();
-                const filteredTools = toolsData.filter(tool => 
-                    tool.name.toLowerCase().includes(searchTerm) || 
-                    tool.category.toLowerCase().includes(searchTerm)
-                );
-                renderTools(filteredTools);
-            });
+                let width = 0;
+                const interval = setInterval(() => {
+                    if (width >= 100) {
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            alert('Proses selesai! (Ini adalah simulasi)');
+                            progressBar.style.display = 'none';
+                            // Add download animation here
+                            const toolCard = document.getElementById(toolId);
+                            const downloadIcon = document.createElement('div');
+                            downloadIcon.innerHTML = '⬇️';
+                            downloadIcon.style.fontSize = '2em';
+                            downloadIcon.style.animation = 'bounce 0.5s infinite';
+                            toolCard.appendChild(downloadIcon);
+                            setTimeout(() => toolCard.removeChild(downloadIcon), 3000);
+                        }, 500);
+                    } else {
+                        width += Math.random() * 10;
+                        if (width > 100) width = 100;
+                        progress.style.width = width + '%';
+                    }
+                }, 200);
 
-            toolsGrid.addEventListener('click', (e) => {
-                if (e.target.classList.contains('btn-use')) {
-                    const action = e.target.getAttribute('data-action');
-                    const tool = toolsData.find(t => t.action === action);
-                    openModal(tool);
-                }
-            });
-
-            closeBtn.onclick = () => modal.style.display = "none";
-            window.onclick = (e) => {
-                if (e.target == modal) modal.style.display = "none";
+                // Here you would typically implement the actual file processing logic
+                // For now, we're just simulating the process
             }
-
-            function openModal(tool) {
-                modalTitle.textContent = tool.name;
-                toolInterface.innerHTML = '';
-                modal.style.display = "block";
-
-                switch(tool.action) {
-                    case 'convertPDF':
-                    case 'mergePDF':
-                    case 'splitPDF':
-                        toolInterface.innerHTML = `
-                            <input type="file" accept=".pdf" multiple>
-                            <button onclick="processPDF('${tool.action}')">Process PDF</button>
-                        `;
-                        break;
-                    case 'compressImage':
-                    case 'resizeImage':
-                    case 'cropImage':
-                        toolInterface.innerHTML = `
-                            <input type="file" accept="image/*">
-                            <button onclick="processImage('${tool.action}')">Process Image</button>
-                        `;
-                        break;
-                    case 'countWords':
-                    case 'convertCase':
-                        toolInterface.innerHTML = `
-                            <textarea rows="5" placeholder="Enter your text here"></textarea>
-                            <button onclick="processText('${tool.action}')">Process Text</button>
-                        `;
-                        break;
-                    case 'convertCurrency':
-                        toolInterface.innerHTML = `
-                            <input type="number" placeholder="Amount">
-                            <input type="text" placeholder="From Currency (e.g., USD)">
-                            <input type="text" placeholder="To Currency (e.g., EUR)">
-                            <button onclick="convertCurrency()">Convert</button>
-                        `;
-                        break;
-                    case 'calculate':
-                        toolInterface.innerHTML = `
-                            <input type="text" placeholder="Enter calculation (e.g., 2 + 2)">
-                            <button onclick="calculate()">Calculate</button>
-                        `;
-                        break;
-                }
-            }
-
-            // Tool processing functions
-            window.processPDF = (action) => {
-                const files = document.querySelector('#tool-interface input[type="file"]').files;
-                let result = `Processing ${files.length} file(s) with ${action}`;
-                alert(result);
-            };
-
-            window.processImage = (action) => {
-                const file = document.querySelector('#tool-interface input[type="file"]').files[0];
-                let result = `Processing image with ${action}: ${file.name}`;
-                alert(result);
-            };
-
-            window.processText = (action) => {
-                const text = document.querySelector('#tool-interface textarea').value;
-                let result;
-                if (action === 'countWords') {
-                    result = `Word count: ${text.split(/\s+/).filter(Boolean).length}`;
-                } else if (action === 'convertCase') {
-                    result = `Uppercase: ${text.toUpperCase()}\nLowercase: ${text.toLowerCase()}`;
-                }
-                alert(result);
-            };
-
-            window.convertCurrency = () => {
-                const amount = document.querySelector('#tool-interface input[type="number"]').value;
-                const from = document.querySelector('#tool-interface input[type="text"]:nth-of-type(1)').value;
-                const to = document.querySelector('#tool-interface input[type="text"]:nth-of-type(2)').value;
-                let result = `Converting ${amount} ${from} to ${to}`;
-                alert(result);
-            };
-
-            window.calculate = () => {
-                const expression = document.querySelector('#tool-interface input[type="text"]').value;
-                try {
-                    const result = eval(expression);
-                    alert(`Result: ${result}`);
-                } catch (error) {
-                    alert('Invalid expression');
-                }
-            };
-        });
-
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
         });
     </script>
 </body>
